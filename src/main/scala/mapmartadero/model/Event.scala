@@ -75,7 +75,7 @@ class Event private() extends Record[Event] with KeyedRecord[Long] {
   lazy val image = new StringField(this, 100)
 
   @Column(name="PUBDATE_EVENTO")
-  lazy val publishedDate = new DateTimeField(this)
+  lazy val publishedDate = new OptionalDateTimeField(this)
 
 }
 

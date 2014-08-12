@@ -12,6 +12,7 @@ object DbSchema extends Schema {
   val activities: Table[Activity] = table("ACTIVIDAD")
   val bookings: Table[Booking] = table("RESERVA")
   val residences: Table[Residence] = table("RESIDENCIA")
+  val workshops: Table[Workshop] = table("TALLER")
 
 
 }

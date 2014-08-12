@@ -41,7 +41,7 @@ class Activity private() extends Record[Activity] with KeyedRecord[Long] {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="ID_PROPPUESTA")
+  @Column(name="ID_PROPUESTA")
   lazy val proposalId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }

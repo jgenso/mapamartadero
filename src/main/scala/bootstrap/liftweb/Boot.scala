@@ -46,6 +46,7 @@ class Boot extends Loggable {
       println(s"Actividades: ${DbSchema.activities.size}")
       println(s"Booking: ${DbSchema.bookings.size}")
       println(s"REsidencias: ${DbSchema.residences.size}")
+      println(s"Talleres: ${DbSchema.workshops.size}")
     }
 
     // init mongodb

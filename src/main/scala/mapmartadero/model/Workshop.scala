@@ -22,31 +22,61 @@ import net.liftweb.json.JsonAST.JField
 class Workshop private() extends Record[Workshop] with KeyedRecord[Long] {
   override def meta: MetaRecord[Workshop] = Workshop
 
-  @Column(name="ID_RESERVA")
+  @Column(name="ID_TALLER")
   override lazy val idField = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="ID_PERSONA")
-  lazy val personId = new LongField(this, 0L) {
+  @Column(name="ID_AREA")
+  lazy val areaId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="ID_PROPUESTA")
-  lazy val proposalId = new LongField(this, 0L) {
+  @Column(name="ID_ARTISTA")
+  lazy val artistId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="FECHA_RESERVA")
-  lazy val bookingDate = new DateTimeField(this)
+  @Column(name="NOMBRE_TALLER")
+  lazy val name = new StringField(this, 250)
 
-  @Column(name="CARGO_PERSONA")
-  lazy val inChargePerson = new StringField(this, 300) {
+  @Column(name="BREVE_TALLER")
+  lazy val breve = new StringField(this, 1000) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="ID_SOLICITANTE")
-  lazy val applicantId = new LongField(this, 0L) {
+  @Column(name="CONTENIDO_TALLER")
+  lazy val content = new StringField(this, 10000) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="COSTO_TALLER")
+  lazy val cost = new StringField(this, 500) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="HORA_TALLER")
+  lazy val hour = new StringField(this, 500) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="DESTINADO_A")
+  lazy val intendedFor = new StringField(this, 200) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="REQUERIMIENTOS")
+  lazy val requirements = new StringField(this, 1000) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="ESTADO")
+  lazy val status = new StringField(this, 50) {
+    override def shouldDisplay_? = false
+  }
+
+  @Column(name="pubdate_taller")
+  lazy val published = new DateTimeField(this) {
     override def shouldDisplay_? = false
   }
 
