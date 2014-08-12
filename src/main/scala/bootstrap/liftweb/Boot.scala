@@ -10,7 +10,7 @@ import util._
 import util.Helpers._
 import net.liftweb.squerylrecord.RecordTypeMode._
 import mapmartadero.config._
-import mapmartadero.model.{SystemUser, User}
+import mapmartadero.model.{DbSchema, SystemUser, User}
 
 import net.liftmodules.extras.{Gravatar, LiftExtras}
 import net.liftmodules.mongoauth.MongoAuth
@@ -40,6 +40,10 @@ class Boot extends Loggable {
         }
       }
     })
+
+    inTransaction {
+      println(s"Eventos: ${DbSchema.events.size}")
+    }
 
     // init mongodb
     MongoConfig.init()
