@@ -13,6 +13,7 @@ object LiftProjectBuild extends Build {
         "net.liftweb" %% "lift-mongodb-record" % Ver.lift % "compile",
         "net.liftmodules" %% ("mongoauth_"+Ver.lift_edition) % "0.4" % "compile",
         "net.liftmodules" %% ("extras_"+Ver.lift_edition) % "0.3" % "compile",
+        "net.liftweb" %% "lift-squeryl-record" % Ver.lift % "compile",
         "org.eclipse.jetty" % "jetty-webapp" % Ver.jetty % "container",
         "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile",
         "org.scalatest" %% "scalatest" % "1.9.2" % "test",

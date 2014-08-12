@@ -8,7 +8,7 @@ import common._
 import http._
 import util._
 import util.Helpers._
-
+import net.liftweb.squerylrecord.RecordTypeMode._
 import mapmartadero.config._
 import mapmartadero.model.{SystemUser, User}
 
@@ -22,6 +22,24 @@ import net.liftmodules.mongoauth.MongoAuth
 class Boot extends Loggable {
   def boot {
     logger.info("Run Mode: "+Props.mode.toString)
+
+    // init auth-squeryl
+    SquerylConfig.init
+    S.addAround(new LoanWrapper {
+      override def apply[T](f: => T): T = {
+        val result = inTransaction {
+          try {
+            Right(f)
+          } catch {
+            case e: LiftFlowOfControlException => Left(e)
+          }
+        }
+        result match {
+          case Right(r) => r
+          case Left(exception) => throw exception
+        }
+      }
+    })
 
     // init mongodb
     MongoConfig.init()
