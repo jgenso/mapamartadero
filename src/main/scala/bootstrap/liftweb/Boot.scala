@@ -43,6 +43,9 @@ class Boot extends Loggable {
 
     inTransaction {
       println(s"Eventos: ${DbSchema.events.size}")
+      println(s"Actividades: ${DbSchema.activities.size}")
+      println(s"Booking: ${DbSchema.bookings.size}")
+      println(s"REsidencias: ${DbSchema.residences.size}")
     }
 
     // init mongodb

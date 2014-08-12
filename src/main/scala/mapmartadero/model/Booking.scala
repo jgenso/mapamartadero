@@ -22,30 +22,30 @@ import net.liftweb.json.JsonAST.JField
 class Booking private() extends Record[Booking] with KeyedRecord[Long] {
   override def meta: MetaRecord[Booking] = Booking
 
-  @Column(name="id_reserva")
+  @Column(name="ID_RESERVA")
   override lazy val idField = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_persona")
+  @Column(name="ID_PERSONA")
   lazy val personId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_propuesta")
+  @Column(name="ID_PROPUESTA")
   lazy val proposalId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="fecha_reserva")
+  @Column(name="FECHA_RESERVA")
   lazy val bookingDate = new DateTimeField(this)
 
-  @Column(name="cargo_persona")
+  @Column(name="CARGO_PERSONA")
   lazy val inChargePerson = new StringField(this, 300) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_solicitante")
+  @Column(name="ID_SOLICITANTE")
   lazy val applicantId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }

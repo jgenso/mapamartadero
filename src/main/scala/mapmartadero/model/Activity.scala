@@ -21,47 +21,47 @@ import net.liftweb.json.JsonAST.JField
 class Activity private() extends Record[Activity] with KeyedRecord[Long] {
   override def meta: MetaRecord[Activity] = Activity
 
-  @Column(name="id_actividad")
+  @Column(name="ID_ACTIVIDAD")
   override lazy val idField = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_artista")
+  @Column(name="ID_ARTISTA")
   lazy val artistId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_ambiente")
+  @Column(name="ID_AMBIENTE")
   lazy val ambientId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_tipoactividad")
+  @Column(name="ID_TIPOACTIVIDAD")
   lazy val activityTypeId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="id_prppuesta")
+  @Column(name="ID_PROPPUESTA")
   lazy val proposalId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="nombre_actividad")
+  @Column(name="NOMBRE_ACTIVIDAD")
   lazy val name = new StringField(this, 200)
 
-  @Column(name="hora_actividad")
+  @Column(name="HORA_ACTIVIDAD")
   lazy val hour = new StringField(this, 250)
 
-  @Column(name="costo_actividad")
+  @Column(name="COSTO_ACTIVIDAD")
   lazy val cost = new StringField(this, 300)
 
-  @Column(name="breve_actividad")
+  @Column(name="BREVE_ACTIVIDAD")
   lazy val breve = new StringField(this, 10000)
 
-  @Column(name="detalle_actividad")
+  @Column(name="DETALLE_ACTIVIDAD")
   lazy val detail = new StringField(this, 10000)
 
-  @Column(name="imagen_actividad")
+  @Column(name="IMAGEN_ACTIVIDAD")
   lazy val image = new StringField(this, 100)
 
 }

@@ -53,7 +53,7 @@ class Event private() extends Record[Event] with KeyedRecord[Long] {
   @Column(name="HORA_EVENTO")
   lazy val hour = new StringField(this, 500)
 
-  @Column(name="COSTO_ACTIVIDAD")
+  @Column(name="COSTO_EVENTO")
   lazy val cost = new StringField(this, 500)
 
   @Column(name="DESTACADO")
@@ -68,7 +68,7 @@ class Event private() extends Record[Event] with KeyedRecord[Long] {
   @Column(name="DESTINADO_A")
   lazy val intendedFor = new StringField(this, 1000)
 
-  @Column(name="REQUERIEMIENTOS")
+  @Column(name="REQUERIMIENTOS")
   lazy val requirements = new StringField(this, 1000)
 
   @Column(name="IMAGEN_EVENTO")

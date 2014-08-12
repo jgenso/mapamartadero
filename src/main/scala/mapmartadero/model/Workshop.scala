@@ -19,37 +19,38 @@ import net.liftweb.common._
 import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.JsonAST.JField
 
-class Residence private() extends Record[Residence] with KeyedRecord[Long] {
-  override def meta: MetaRecord[Residence] = Residence
+class Workshop private() extends Record[Workshop] with KeyedRecord[Long] {
+  override def meta: MetaRecord[Workshop] = Workshop
 
-  @Column(name="ID_RESIDENCIA")
+  @Column(name="ID_RESERVA")
   override lazy val idField = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="CODIGO_RESIDENCIA")
-  lazy val code = new StringField(this, 10) {
+  @Column(name="ID_PERSONA")
+  lazy val personId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="CAPACIDAD_RESIDENCIA")
-  lazy val capacity = new StringField(this, 200) {
+  @Column(name="ID_PROPUESTA")
+  lazy val proposalId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="ESTADO_RESIDENCIA")
-  lazy val status = new StringField(this, 200) {
+  @Column(name="FECHA_RESERVA")
+  lazy val bookingDate = new DateTimeField(this)
+
+  @Column(name="CARGO_PERSONA")
+  lazy val inChargePerson = new StringField(this, 300) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="DESCRIPCION_RESIDENCIA")
-  lazy val descripcion = new StringField(this, 10000) {
+  @Column(name="ID_SOLICITANTE")
+  lazy val applicantId = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="RESERVABLE")
-  lazy val isReservable = new BooleanField(this, false)
 
 }
 
-object Residence extends Residence with MetaRecord[Residence]
+object Workshop extends Workshop with MetaRecord[Workshop]
