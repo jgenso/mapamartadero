@@ -18,7 +18,7 @@ object LiftProjectBuild extends Build {
         "ch.qos.logback" % "logback-classic" % "1.0.13" % "compile",
         "org.scalatest" %% "scalatest" % "1.9.2" % "test",
         "com.foursquare" %% "rogue-lift" % "2.2.0",
-        "mysql" % "mysql-connector-java" % "5.1.6" 
+        "mysql" % "mysql-connector-java" % "5.1.6"
       )
     )
 }

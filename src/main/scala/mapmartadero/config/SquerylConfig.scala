@@ -29,8 +29,8 @@ object SquerylConfig extends Factory with Loggable {
     inTransaction {
       try {
         schema.map(s => {
-          s().create
-          s().printDdl
+         // s().create
+         // s().printDdl
         })
       } catch {
         case e: Throwable => e.printStackTrace()
