@@ -22,59 +22,59 @@ import net.liftweb.json.JsonAST.JField
 class Event private() extends Record[Event] with KeyedRecord[Long] {
   override def meta: MetaRecord[Event] = Event
 
-  @Column(name="id_propuesta")
+  @Column(name="ID_PROPUESTA")
   override lazy val idField = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="num_evento")
+  @Column(name="NUM_EVENTO")
   lazy val number = new LongField(this, 0L) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="breve_evento")
+  @Column(name="BREVE_EVENTO")
   lazy val breve = new StringField(this, 1000) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="detalle_evento")
+  @Column(name="DETALLE_EVENTO")
   lazy val detail = new StringField(this, 10000) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="organiza")
+  @Column(name="ORGANIZA")
   lazy val organize = new StringField(this, 10000) {
     override def shouldDisplay_? = false
   }
 
-  @Column(name="auspicia")
+  @Column(name="AUSPICIA")
   lazy val sponsors = new StringField(this, 10000)
 
-  @Column(name="hora_evento")
+  @Column(name="HORA_EVENTO")
   lazy val hour = new StringField(this, 500)
 
-  @Column(name="costo_actividad")
+  @Column(name="COSTO_ACTIVIDAD")
   lazy val cost = new StringField(this, 500)
 
-  @Column(name="destacado")
+  @Column(name="DESTACADO")
   lazy val isOutstanding = new BooleanField(this, false)
 
-  @Column(name="varias_activities")
+  @Column(name="VARIAS_ACTIVIDADES")
   lazy val hasSeveralActivities = new BooleanField(this, false)
 
-  @Column(name="id_artista")
+  @Column(name="ID_ARTISTA")
   lazy val artistId = new LongField(this, 0L)
 
-  @Column(name="destinado_a")
+  @Column(name="DESTINADO_A")
   lazy val intendedFor = new StringField(this, 1000)
 
-  @Column(name="requeriemientos")
+  @Column(name="REQUERIEMIENTOS")
   lazy val requirements = new StringField(this, 1000)
 
-  @Column(name="imagen_evento")
+  @Column(name="IMAGEN_EVENTO")
   lazy val image = new StringField(this, 100)
 
-  @Column(name="pubdate_evento")
+  @Column(name="PUBDATE_EVENTO")
   lazy val publishedDate = new DateTimeField(this)
 
 }
