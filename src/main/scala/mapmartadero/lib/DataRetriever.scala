@@ -5,16 +5,15 @@ import mapmartadero.model._
 import net.liftweb.squerylrecord.RecordTypeMode._
 import org.joda.time.DateTime
 import com.mongodb.WriteConcern
-import net.liftweb.common.{Loggable, Full}
+import net.liftweb.common.{Logger, Loggable, Full}
 import mapmartadero.model.LocalRoom
-import net.liftweb.common.Full
 
 /**
  * Created by j2 on 20-08-14.
  */
-object DataRetriever extends Loggable {
+object DataRetriever extends Logger {
 
-  def updateData() = {
+  def updateData() = inTransaction {
     val startDate = DateTime.now().withTimeAtStartOfDay()
     val endDate = startDate.plusDays(1)
     val dates = retrieveDates(startDate, endDate)
@@ -28,11 +27,12 @@ object DataRetriever extends Loggable {
       proposal <- proposals
       generalEvent <- GeneralEvent.findByProposal(proposal.id)
     } yield {
-      logger.info(s"PROCESSING PROPOSAL: ${proposal.name.get}")
+      info(s"PROCESSING PROPOSAL: ${proposal.name.get}")
       generalEvent.hour(proposal.activity.hour.get).name(proposal.name.get)
         .room(Full(LocalRoom(proposal.activity.roomName)))
         .cost(proposal.activity.cost.get).area(proposal.areaName).date(startDate.toDate)
       GeneralEvent.save(generalEvent, WriteConcern.SAFE)
+      info("END PROCESSING PROPOSAL: ${proposal.name.get}")
     }
   }
 
@@ -55,7 +55,6 @@ object DataRetriever extends Loggable {
 
   def retrieveDates(startDate: DateTime, endDate: DateTime) = {
     val query = DbSchema.martaderoDates.where(date => date.date between(startDate.toDate, endDate.toDate))
-    println("QUERY:" + query.statement)
     query.toList
   }
 

@@ -15,12 +15,40 @@ import mapmartadero.model.{DbSchema, SystemUser, User}
 import net.liftmodules.extras.{Gravatar, LiftExtras}
 import net.liftmodules.mongoauth.MongoAuth
 import mapmartadero.lib.DataRetriever
+import org.quartz.{Trigger, JobDetail, Scheduler, SchedulerException}
+import org.quartz.impl.StdSchedulerFactory
+import org.quartz.JobBuilder._
+import org.quartz.TriggerBuilder._
+import org.quartz.SimpleScheduleBuilder._
+import mapmartadero.lib.quartz.SyncJob
 
 /**
  * A class that's instantiated early and run.  It allows the application
  * to modify lift's environment
  */
 class Boot extends Loggable {
+  private def quartzInit {
+
+    // Grab the Scheduler instance from the Factory
+    val scheduler: Scheduler = StdSchedulerFactory.getDefaultScheduler();
+
+    // and start it off
+    scheduler.start()
+
+    // define the job and tie it to our HelloJob class
+    val job: JobDetail = newJob(classOf[SyncJob])
+    .withIdentity("job1", "group1")
+      .build()
+
+    // Trigger the job to run now, and then repeat every 40 seconds
+    val trigger: Trigger = newTrigger()
+      .withIdentity("trigger1", "group1")
+      .startNow()
+      .withSchedule(simpleSchedule().withIntervalInSeconds(60).repeatForever()).build()
+
+    // Tell quartz to schedule the job using our trigger
+    scheduler.scheduleJob(job, trigger);
+  }
   def boot {
     logger.info("Run Mode: "+Props.mode.toString)
 
@@ -45,24 +73,6 @@ class Boot extends Loggable {
 
     // init mongodb
     MongoConfig.init()
-
-    inTransaction {
-      /*
-      println(s"Eventos: ${DbSchema.events.size}")
-      println(s"Actividades: ${DbSchema.activities.size}")
-      println(s"Booking: ${DbSchema.bookings.size}")
-      println(s"REsidencias: ${DbSchema.residences.size}")
-      println(s"Talleres: ${DbSchema.workshops.size}")
-      println(s"ATs: ${DbSchema.activityTypes.size}")
-      println(s"Areas: ${DbSchema.areas.size}")
-      println(s"Rooms: ${DbSchema.rooms.size}")
-      */
-      println("UPDATING DB")
-      DataRetriever.updateData()
-      println("END UPDATING DB")
-    }
-
-
 
     // init auth-mongo
     /*
@@ -126,6 +136,8 @@ class Boot extends Loggable {
     // Mailer
     Mailer.devModeSend.default.set((m: MimeMessage) => logger.info("Dev mode message:\n" + prettyPrintMime(m)))
     Mailer.testModeSend.default.set((m: MimeMessage) => logger.info("Test mode message:\n" + prettyPrintMime(m)))
+
+    quartzInit
   }
 
   private def prettyPrintMime(m: MimeMessage): String = {
