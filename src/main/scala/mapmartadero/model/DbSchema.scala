@@ -13,8 +13,12 @@ object DbSchema extends Schema {
   val bookings: Table[Booking] = table("RESERVA")
   val residences: Table[Residence] = table("RESIDENCIA")
   val workshops: Table[Workshop] = table("TALLER")
-  val activityTypes: Table[ActivityType] = table("TIPO_ACTIVIDAD")
+  val activityTypes: Table[ActivityType] = table("TIPOACTIVIDAD")
   val areas: Table[Area] = table("AREA")
   val rooms: Table[Room] = table("AMBIENTE")
+  val martaderoDates: Table[MartaderoDate] = table("FECHA")
+  val activityDates: Table[ActivityDate] = table("FECHA_ACTIVIDAD")
+  val workshopDates: Table[WorkshopDate] = table("FECHA_TALLER")
+  val proposals: Table[Proposal] = table("PROPUESTA")
 
 }

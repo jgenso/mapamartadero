@@ -28,18 +28,18 @@ object MapApp extends SnippetHelper with Loggable {
   implicit val formats = DefaultFormats
 
   def render(in: NodeSeq): NodeSeq = {
-    val elementId = "map"
 
     /**
      * fetch mongo events
      */
     def fetchEvents(): JsCmd = {
+      println("CALLED")
       val now = DateTime.now()
       val dayStart = now.withTimeAtStartOfDay()
       val dayEnd = now.plusDays(1).withTimeAtStartOfDay()
       val events = GeneralEvent.where(_.date between(dayStart, dayEnd)).fetch()
       val ret = ("events" -> events.map(_.asJValue))
-      NgBroadcast("temps", "after-fetch-events", Full(ret))
+      NgBroadcast("map", "after-fetch-events", Full(ret))
     }
 
     val funcs = JsObj(

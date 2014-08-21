@@ -97,7 +97,7 @@
     lift_registerGC: function() {
       var data = "__lift__GC=_",
           version = null;
-      jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "script", timeout : 5000, cache : false, success : liftAjax.lift_successRegisterGC, error : liftAjax.lift_failRegisterGC });
+      jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "script", timeout : 50000, cache : false, success : liftAjax.lift_successRegisterGC, error : liftAjax.lift_failRegisterGC });
        },
 
 
@@ -181,12 +181,12 @@
     },
 
     lift_actualAjaxCall: function(data, version, onSuccess, onFailure) {
-      jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "script", timeout : 5000, cache : false, success : onSuccess, error : onFailure });
+      jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "script", timeout : 50000, cache : false, success : onSuccess, error : onFailure });
         },
 
         lift_actualJSONCall: function(data, onSuccess, onFailure) {
           var version = null;
-          jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "json", timeout : 5000, cache : false, success : onSuccess, error : onFailure });
+          jQuery.ajax({ url : liftAjax.addPageNameAndVersion("/ajax_request/", version), data : data, type : "POST", dataType : "json", timeout : 50000, cache : false, success : onSuccess, error : onFailure });
               }
             };
 

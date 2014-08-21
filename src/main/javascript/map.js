@@ -22,15 +22,15 @@
         $scope.greens = ['C2A', 'C2B', 'C6', 'C7'];
         $scope.lilas = ['D5', 'D6'];
         $scope.blacks = ['B2', 'B5', 'C6PA', 'D6PA', 'E2'];
-        $scope.events = [{'name': 'Evento de prueba', 'hour': '18:30', 'room': {'name': 'A1'}}];
+        $scope.events = [];
 
         $scope.$on('after-fetch-events', function (event, data) {
-           $scope.events = data.events;
+           $scope.$apply(function() {
+               $scope.events = data.events;
+           });
         });
 
-        console.log($scope.events);
-
-        $scope.fetchEvents = function(){
+        $scope.fetchEvents = function() {
             ServerFuncs.fetchEvents();
         };
 
@@ -38,6 +38,8 @@
             return $.inArray(value, arr) !== -1;
         };
 
+        $scope.$watch( 'events', function(newValue, oldValue) {
+        });
 
         $scope.fetchEvents();
     }]);

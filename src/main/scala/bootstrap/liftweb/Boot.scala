@@ -14,6 +14,7 @@ import mapmartadero.model.{DbSchema, SystemUser, User}
 
 import net.liftmodules.extras.{Gravatar, LiftExtras}
 import net.liftmodules.mongoauth.MongoAuth
+import mapmartadero.lib.DataRetriever
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -24,7 +25,7 @@ class Boot extends Loggable {
     logger.info("Run Mode: "+Props.mode.toString)
 
     // init auth-squeryl
-    /*
+
     SquerylConfig.init
     S.addAround(new LoanWrapper {
       override def apply[T](f: => T): T = {
@@ -40,34 +41,45 @@ class Boot extends Loggable {
           case Left(exception) => throw exception
         }
       }
-    })*/
+    })
 
-    /*inTransaction {
+    // init mongodb
+    MongoConfig.init()
+
+    inTransaction {
+      /*
       println(s"Eventos: ${DbSchema.events.size}")
       println(s"Actividades: ${DbSchema.activities.size}")
       println(s"Booking: ${DbSchema.bookings.size}")
       println(s"REsidencias: ${DbSchema.residences.size}")
       println(s"Talleres: ${DbSchema.workshops.size}")
-    }*/
+      println(s"ATs: ${DbSchema.activityTypes.size}")
+      println(s"Areas: ${DbSchema.areas.size}")
+      println(s"Rooms: ${DbSchema.rooms.size}")
+      */
+      println("UPDATING DB")
+      DataRetriever.updateData()
+      println("END UPDATING DB")
+    }
 
-    // init mongodb
-    MongoConfig.init()
+
 
     // init auth-mongo
+    /*
     MongoAuth.authUserMeta.default.set(User)
     MongoAuth.loginTokenAfterUrl.default.set(Site.password.url)
     MongoAuth.siteName.default.set("Mapa Martadero")
     MongoAuth.systemEmail.default.set(SystemUser.user.email.get)
-    MongoAuth.systemUsername.default.set(SystemUser.user.name.get)
+    MongoAuth.systemUsername.default.set(SystemUser.user.name.get)*/
 
     // For S.loggedIn_? and TestCond.loggedIn/Out builtin snippet
-    LiftRules.loggedInTest = Full(() => User.isLoggedIn)
+//    LiftRules.loggedInTest = Full(() => User.isLoggedIn)
 
     // checks for ExtSession cookie
-    LiftRules.earlyInStateful.append(User.testForExtSession)
+  //  LiftRules.earlyInStateful.append(User.testForExtSession)
 
     // Gravatar
-    Gravatar.defaultImage.default.set("wavatar")
+    //Gravatar.defaultImage.default.set("wavatar")
 
     // config an email sender
     SmtpMailer.init
@@ -103,6 +115,10 @@ class Boot extends Loggable {
 
     // Init Extras
     LiftExtras.init()
+
+    LiftRules.ajaxPostTimeout = 10000
+
+    LiftRules.cometGetTimeout = 10000
 
     // don't include the liftAjax.js code. It's served statically.
     LiftRules.autoIncludeAjaxCalc.default.set(() => (session: LiftSession) => false)

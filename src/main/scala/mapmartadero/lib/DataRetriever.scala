@@ -1,35 +1,37 @@
 package mapmartadero
 package lib
 
-import mapmartadero.model.{Booking, DbSchema, GeneralEvent}
+import mapmartadero.model._
 import net.liftweb.squerylrecord.RecordTypeMode._
 import org.joda.time.DateTime
-import mapmartadero.model.LocalRoom
 import com.mongodb.WriteConcern
+import net.liftweb.common.{Loggable, Full}
+import mapmartadero.model.LocalRoom
 import net.liftweb.common.Full
 
 /**
  * Created by j2 on 20-08-14.
  */
-object DataRetriever {
+object DataRetriever extends Loggable {
 
-  def updateDate() = {
+  def updateData() = {
     val startDate = DateTime.now().withTimeAtStartOfDay()
     val endDate = startDate.plusDays(1)
-    val bookings = retrieveBookings(startDate, endDate)
-
-
-    val workshops = DbSchema.workshops.where(workshop => workshop.idField in bookings.map(_.idField)) //ToDo verificar
+    val dates = retrieveDates(startDate, endDate)
+    updateProposals(dates, startDate)
+   // ToDo val workshops = DbSchema.workshops.where(workshop => workshop.idField in bookings.map(_.idField)) //ToDo verificar
   }
 
-  def updateActivities(bookings: List[Booking], startDate: DateTime) = {
-    val activities = DbSchema.activities.where(activity => activity.proposalId in bookings.map(_.idField))
+  def updateProposals(dates: List[MartaderoDate], startDate: DateTime) = {
+    val proposals = DbSchema.proposals.where(p => p.idField in dates.map(_.proposal))
     for {
-      activity <- activities
-      generalEvent <- GeneralEvent.findByProposal(activity.proposalId.get)
+      proposal <- proposals
+      generalEvent <- GeneralEvent.findByProposal(proposal.id)
     } yield {
-      generalEvent.hour(activity.hour.get).room(Full(LocalRoom(activity.roomName)))
-        .cost(activity.cost.get).area(activity.activityTypeName).date(startDate.toDate)
+      logger.info(s"PROCESSING PROPOSAL: ${proposal.name.get}")
+      generalEvent.hour(proposal.activity.hour.get).name(proposal.name.get)
+        .room(Full(LocalRoom(proposal.activity.roomName)))
+        .cost(proposal.activity.cost.get).area(proposal.areaName).date(startDate.toDate)
       GeneralEvent.save(generalEvent, WriteConcern.SAFE)
     }
   }
@@ -47,7 +49,14 @@ object DataRetriever {
   }
 
   def retrieveBookings(startDate: DateTime, endDate: DateTime) = {
-    DbSchema.bookings.where(booking => booking.bookingDate between(startDate.toDate, endDate.toDate)).toList
+    val query = DbSchema.bookings.where(booking => booking.bookingDate between(startDate.toDate, endDate.toDate))
+    query.toList
+  }
+
+  def retrieveDates(startDate: DateTime, endDate: DateTime) = {
+    val query = DbSchema.martaderoDates.where(date => date.date between(startDate.toDate, endDate.toDate))
+    println("QUERY:" + query.statement)
+    query.toList
   }
 
 }
