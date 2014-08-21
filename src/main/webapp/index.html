@@ -30,7 +30,8 @@
             <div ng-repeat="event in events" class="col-lg-12 pull-left m-activities">
                 <div class="col-lg-2 uppercase pull-left text-center">
                     <div class="square-grey text-black">
-                        <span class="m-table-large-font text-black">{{event.hour}}</span>
+                        <span class="m-table-large-font text-black" ng-show="event.hour != ''">{{event.hour}}</span>
+                        <span class="m-table-large-font text-black" ng-show="event.hour == ''">N/A</span>
                     </div>
                 </div>
                 <div class="col-lg-2 uppercase pull-left text-center">

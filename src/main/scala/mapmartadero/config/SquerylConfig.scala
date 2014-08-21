@@ -21,7 +21,7 @@ object SquerylConfig extends Factory with Loggable {
     import net.liftweb.squerylrecord.SquerylRecord
     import org.squeryl.Session
     def connection = DriverManager.getConnection(
-      Props.get("db.url", "jdbc:mysql://localhost/gobernacioncbba"),
+      Props.get("db.url", "jdbc:mysql://localhost/test?characterEncoding=latin1"),
       Props.get("db.user", "root"),
       Props.get("db.password", "mysql"))
 
