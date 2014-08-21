@@ -7,8 +7,15 @@ libs/liftAjax.js
 # bootstrap
 libs/bootstrap-3.0.2.min.js
 
+# angular
+libs/angular.js
+libs/angular-route.min.js
+
 # app
 App.js
 
 # views
 views/user/Login.js
+
+# Map
+map.js

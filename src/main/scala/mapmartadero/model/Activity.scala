@@ -17,6 +17,7 @@ import xml.{Text, NodeSeq}
 import net.liftweb.common._
 import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.JsonAST.JField
+import net.liftweb.squerylrecord.RecordTypeMode._
 
 class Activity private() extends Record[Activity] with KeyedRecord[Long] {
   override def meta: MetaRecord[Activity] = Activity
@@ -63,6 +64,10 @@ class Activity private() extends Record[Activity] with KeyedRecord[Long] {
 
   @Column(name="IMAGEN_ACTIVIDAD")
   lazy val image = new StringField(this, 100)
+
+  def roomName = DbSchema.rooms.where(_.idField === ambientId).headOption.map(_.name.get) getOrElse ""
+
+  def activityTypeName = DbSchema.activityTypes.where(_.idField === activityTypeId).headOption.map(_.name.get) getOrElse ""
 
 }
 

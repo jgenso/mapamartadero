@@ -24,6 +24,7 @@ class Boot extends Loggable {
     logger.info("Run Mode: "+Props.mode.toString)
 
     // init auth-squeryl
+    /*
     SquerylConfig.init
     S.addAround(new LoanWrapper {
       override def apply[T](f: => T): T = {
@@ -39,7 +40,7 @@ class Boot extends Loggable {
           case Left(exception) => throw exception
         }
       }
-    })
+    })*/
 
     /*inTransaction {
       println(s"Eventos: ${DbSchema.events.size}")
