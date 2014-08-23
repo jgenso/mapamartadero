@@ -55,7 +55,7 @@ class Boot extends Loggable {
 
     // init auth-squeryl
 
-    /*SquerylConfig.init
+    SquerylConfig.init
     S.addAround(new LoanWrapper {
       override def apply[T](f: => T): T = {
         val result = inTransaction {
@@ -70,7 +70,7 @@ class Boot extends Loggable {
           case Left(exception) => throw exception
         }
       }
-    })*/
+    })
 
     // init mongodb
     MongoConfig.init()

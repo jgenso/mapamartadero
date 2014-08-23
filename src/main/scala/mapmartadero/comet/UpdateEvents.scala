@@ -41,6 +41,7 @@ class UpdateEvents extends CometActor with CometListener {
     */
     case msg@UpdateEventsNg() => {
       partialUpdate(msg.toJsCmd)
+      Schedule(() => EventsServer ! UpdateEventsNg(), 10.seconds )
     }
     case other =>{
       println("ERRROR:"+other.getClass)
@@ -52,7 +53,6 @@ class UpdateEvents extends CometActor with CometListener {
     "*" #> PassThru
   }
 
-  Schedule(() => EventsServer ! UpdateEventsNg(), 60.seconds )
 
 }
 

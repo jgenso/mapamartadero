@@ -11,7 +11,7 @@ object EventsServer extends LiftActor with ListenerManager {
 
   var page = 1
 
-  val itemsPerPage = 10
+  val itemsPerPage = 7
 
   def createUpdate = UpdateEventsNg()
 
@@ -21,7 +21,7 @@ object EventsServer extends LiftActor with ListenerManager {
    */
   override def lowPriority = {
     case t@UpdateEventsNg() => {
-      val total = GeneralEvent.count
+      val total = GeneralEvent.countTodayEvents()
       val totalPages = total / itemsPerPage + (if (total % itemsPerPage == 0) 0 else 1)
       if (total > itemsPerPage && page < totalPages -1)
         page = page + 1
