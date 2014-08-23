@@ -76,7 +76,7 @@ object GeneralEvent extends GeneralEvent with MongoMetaRecord[GeneralEvent] {
       and(_.status neqs "Por revisar").paginate(itemsPerPage).setPage(page).fetch()
   }
 
-  def countTodayEvents(): List[GeneralEvent] = {
+  def countTodayEvents(): Long = {
     val now = DateTime.now()
     val dayStart = now.withTimeAtStartOfDay().plusDays(4)
     val dayEnd = dayStart.plusDays(1).withTimeAtStartOfDay()
