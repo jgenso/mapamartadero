@@ -14,7 +14,7 @@ import mapmartadero.model.LocalRoom
 object DataRetriever extends Logger {
 
   def updateData() = inTransaction {
-    val startDate = DateTime.now().withTimeAtStartOfDay()
+    val startDate = DateTime.now().withTimeAtStartOfDay().plusDays(4)
     val endDate = startDate.plusDays(1)
     val dates = retrieveDates(startDate, endDate)
     updateProposals(dates, startDate)
@@ -22,15 +22,15 @@ object DataRetriever extends Logger {
   }
 
   def updateProposals(dates: List[MartaderoDate], startDate: DateTime) = {
-    val proposals = DbSchema.proposals.where(p => p.idField in dates.map(_.proposal))
+    val proposals = DbSchema.proposals.where(p => p.idField in dates.map(_.proposal) and p.status <> "Por revisar")
     for {
       proposal <- proposals
       generalEvent <- GeneralEvent.findByProposal(proposal.id)
     } yield {
       info(s"PROCESSING PROPOSAL: ${proposal.name.get}")
-      generalEvent.hour(proposal.activity.hour.get).name(proposal.name.get)
-        .room(Full(LocalRoom(proposal.activity.roomName)))
-        .cost(proposal.activity.cost.get).area(proposal.areaName).date(startDate.toDate)
+      generalEvent.hour(proposal.event.hour.get).name(proposal.name.get)
+        .room(Full(LocalRoom(proposal.roomName)))
+        .cost(proposal.event.cost.get).area(proposal.areaName).date(startDate.toDate)
       GeneralEvent.save(generalEvent, WriteConcern.SAFE)
       info("END PROCESSING PROPOSAL: ${proposal.name.get}")
     }

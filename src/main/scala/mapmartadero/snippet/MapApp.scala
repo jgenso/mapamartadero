@@ -19,6 +19,7 @@ import NgJsCmds._
 import org.joda.time._
 import mapmartadero.model.GeneralEvent
 import com.foursquare.rogue.LiftRogue._
+import mapmartadero.comet.EventsServer
 
 /**
  * Created by j2 on 20-08-14.
@@ -33,11 +34,7 @@ object MapApp extends SnippetHelper with Loggable {
      * fetch mongo events
      */
     def fetchEvents(): JsCmd = {
-      println("CALLED")
-      val now = DateTime.now()
-      val dayStart = now.withTimeAtStartOfDay()
-      val dayEnd = now.plusDays(1).withTimeAtStartOfDay()
-      val events = GeneralEvent.where(_.date between(dayStart, dayEnd)).fetch()
+      val events = GeneralEvent.fetchTodayEvents(EventsServer.page, EventsServer.itemsPerPage)
       val ret = ("events" -> events.map(_.asJValue))
       NgBroadcast("map", "after-fetch-events", Full(ret))
     }

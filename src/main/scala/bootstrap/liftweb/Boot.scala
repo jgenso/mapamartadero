@@ -21,6 +21,7 @@ import org.quartz.JobBuilder._
 import org.quartz.TriggerBuilder._
 import org.quartz.SimpleScheduleBuilder._
 import mapmartadero.lib.quartz.SyncJob
+import mapmartadero.comet.{UpdateEventsNg, EventsServer}
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -44,7 +45,7 @@ class Boot extends Loggable {
     val trigger: Trigger = newTrigger()
       .withIdentity("trigger1", "group1")
       .startNow()
-      .withSchedule(simpleSchedule().withIntervalInSeconds(60).repeatForever()).build()
+      .withSchedule(simpleSchedule().withIntervalInSeconds(300).repeatForever()).build()
 
     // Tell quartz to schedule the job using our trigger
     scheduler.scheduleJob(job, trigger);
@@ -54,7 +55,7 @@ class Boot extends Loggable {
 
     // init auth-squeryl
 
-    SquerylConfig.init
+    /*SquerylConfig.init
     S.addAround(new LoanWrapper {
       override def apply[T](f: => T): T = {
         val result = inTransaction {
@@ -69,7 +70,7 @@ class Boot extends Loggable {
           case Left(exception) => throw exception
         }
       }
-    })
+    })*/
 
     // init mongodb
     MongoConfig.init()
@@ -126,9 +127,11 @@ class Boot extends Loggable {
     // Init Extras
     LiftExtras.init()
 
-    LiftRules.ajaxPostTimeout = 10000
+    LiftRules.ajaxPostTimeout = 120000
 
-    LiftRules.cometGetTimeout = 10000
+    //LiftRules.cometGetTimeout = 240000
+
+    //LiftRules.cometRenderTimeout = 120 seconds
 
     // don't include the liftAjax.js code. It's served statically.
     LiftRules.autoIncludeAjaxCalc.default.set(() => (session: LiftSession) => false)
@@ -137,7 +140,8 @@ class Boot extends Loggable {
     Mailer.devModeSend.default.set((m: MimeMessage) => logger.info("Dev mode message:\n" + prettyPrintMime(m)))
     Mailer.testModeSend.default.set((m: MimeMessage) => logger.info("Test mode message:\n" + prettyPrintMime(m)))
 
-    quartzInit
+    //quartzInit
+
   }
 
   private def prettyPrintMime(m: MimeMessage): String = {

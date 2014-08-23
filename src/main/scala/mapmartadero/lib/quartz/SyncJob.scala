@@ -11,6 +11,7 @@ import com.foursquare.rogue.LiftRogue._
 import org.joda.time.DateTime
 import net.liftweb.mongodb.{DefaultMongoIdentifier, MongoDB}
 import com.mongodb.gridfs.GridFS
+import mapmartadero.comet.{EventsServer, UpdateEventsNg}
 
 class SyncJob extends Job with Logger {
 

@@ -97,7 +97,14 @@ class Proposal private() extends Record[Proposal] with KeyedRecord[Long] {
   @Transient
   lazy val activity = DbSchema.activities.where(_.proposalId === id).headOption getOrElse Activity.createRecord
 
+  @Transient
+  lazy val event = DbSchema.events.where(_.idField === id).headOption getOrElse Event.createRecord
+
   def areaName = DbSchema.areas.where(_.idField === areaId).headOption.map(_.name.get) getOrElse ""
+
+  def roomName = from(DbSchema.bookings, DbSchema.bookedRooms, DbSchema.rooms)(
+    (b, br, r) => where(b.proposalId === id and b.id === br.booking and br.room === r.id) select(r)
+  ).headOption.map(_.code.get) getOrElse ""
 
 }
 

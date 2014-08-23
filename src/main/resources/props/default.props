@@ -1,5 +1,3 @@
-mail.smtp.host=smtp.gmail.com
-mail.smtp.user=
-mail.smtp.pass=
-
-mongo.default.port=27017
+db.url=jdbc:mysql://martadero.org/sinnersi_devmartadero?zeroDateTimeBehavior=convertToNull&characterEncoding=ISO8859_1&autoReconnect=true
+db.user=sinnersi_devivi
+db.password=DevmARTadero

@@ -20,5 +20,6 @@ object DbSchema extends Schema {
   val activityDates: Table[ActivityDate] = table("FECHA_ACTIVIDAD")
   val workshopDates: Table[WorkshopDate] = table("FECHA_TALLER")
   val proposals: Table[Proposal] = table("PROPUESTA")
+  val bookedRooms: Table[BookedRoom] = table("RESERVAAMBIENTE")
 
 }

@@ -22,9 +22,12 @@
         $scope.greens = ['C2A', 'C2B', 'C6', 'C7'];
         $scope.lilas = ['D5', 'D6'];
         $scope.blacks = ['B2', 'B5', 'C6PA', 'D6PA', 'E2'];
+        $scope.multiple = [''];
         $scope.events = [];
 
         $scope.$on('after-fetch-events', function (event, data) {
+           console.log("NEW EVENTS");
+           console.log(data);
            $scope.$apply(function() {
                $scope.events = data.events;
            });

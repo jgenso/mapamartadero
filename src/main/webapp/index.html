@@ -5,33 +5,33 @@
   <div class="main-content">
     <div data-lift="Notices"></div>
     <div class="container-fluid" ng-app="Map" id="map" data-lift="MapApp" ng-controller="MapController">
+        <div data-lift="comet?type=UpdateEvents"></div>
         <div class="col-lg-4 pull-left">
             <img src="/img/mapa-marta.svg" alt="mapa martadero">
         </div>
         <div class="col-lg-8 pull-left">
-            <h1 class="uppercase"><strong>Hoy en el </strong><img src="/img/logo-martadero.svg" width="30%"></h1>
             <div class="col-lg-12 m-table">
                 <div class="col-lg-2 uppercase pull-left text-center">
                     <div class="square-black">
-                        <span class="m-table-extra-large-font">Hora</span>
+                        <span class="m-table-large-font">Hora</span>
                     </div>
                 </div>
                 <div class="col-lg-2 uppercase pull-left text-center">
                     <div class="square-black">
-                        <span class="m-table-extra-large-font">Sala</span>
+                        <span class="m-table-large-font">Sala</span>
                     </div>
                 </div>
                 <div class="col-lg-8 uppercase pull-left text-center">
                     <div class="square-black">
-                        <span class="m-table-extra-large-font">Actividad</span>
+                        <span class="m-table-large-font">Actividad</span>
                     </div>
                 </div>
             </div>
             <div ng-repeat="event in events" class="col-lg-12 pull-left m-activities">
                 <div class="col-lg-2 uppercase pull-left text-center">
                     <div class="square-grey text-black">
-                        <span class="m-table-large-font text-black" ng-show="event.hour != ''">{{event.hour}}</span>
-                        <span class="m-table-large-font text-black" ng-show="event.hour == ''">N/A</span>
+                        <span class="m-table-small-font-bold text-black" ng-show="event.hour != ''">{{event.hour}}</span>
+                        <span class="m-table-small-font-bold text-black" ng-show="event.hour == ''">N/A</span>
                     </div>
                 </div>
                 <div class="col-lg-2 uppercase pull-left text-center">

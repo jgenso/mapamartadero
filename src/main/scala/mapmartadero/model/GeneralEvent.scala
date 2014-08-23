@@ -15,6 +15,7 @@ import net.liftweb.mongodb.record.field.DateField
 import net.liftweb.mongodb.record.field.{MongoCaseClassField, ObjectIdPk}
 import net.liftweb.mongodb.record.{MongoMetaRecord, MongoRecord}
 import com.foursquare.rogue.LiftRogue._
+import org.joda.time._
 
 class GeneralEvent private () extends MongoRecord[GeneralEvent] with ObjectIdPk[GeneralEvent] {
   def meta = GeneralEvent
@@ -37,6 +38,8 @@ class GeneralEvent private () extends MongoRecord[GeneralEvent] with ObjectIdPk[
   object proposal extends LongField(this, 0)
 
   object organize extends StringField(this, 300)
+
+  object status extends StringField(this, 300)
 
 
 
@@ -62,6 +65,23 @@ object GeneralEvent extends GeneralEvent with MongoMetaRecord[GeneralEvent] {
       GeneralEvent.where(_.proposal eqs proposal).fetch().headOption.
         getOrElse(GeneralEvent.createRecord.proposal(proposal))
     )
+  }
+
+  def fetchTodayEvents(page: Int, itemsPerPage: Int): List[GeneralEvent] = {
+    println(s"PAGE $page")
+    val now = DateTime.now()
+    val dayStart = now.withTimeAtStartOfDay().plusDays(4)
+    val dayEnd = dayStart.plusDays(1).withTimeAtStartOfDay()
+    GeneralEvent.where(_.date between(dayStart, dayEnd)).
+      and(_.status neqs "Por revisar").paginate(itemsPerPage).setPage(page).fetch()
+  }
+
+  def countTodayEvents(): List[GeneralEvent] = {
+    val now = DateTime.now()
+    val dayStart = now.withTimeAtStartOfDay().plusDays(4)
+    val dayEnd = dayStart.plusDays(1).withTimeAtStartOfDay()
+    GeneralEvent.where(_.date between(dayStart, dayEnd)).
+      and(_.status neqs "Por revisar").count()
   }
 
 }
